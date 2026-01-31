@@ -5,7 +5,7 @@ use PHPMailer\PHPMailer\Exception;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 /* mailer.php */
-require_once __DIR__ . '/config.php'; // Importamos las claves
+require_once __DIR__ . '/../config.php'; // Importamos las claves
 
 function enviarCorreo($destinatario, $asunto, $cuerpoHTML, $archivos = [], $nombreRemitente = 'MiniPortal')
 {

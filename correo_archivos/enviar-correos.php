@@ -12,43 +12,19 @@ $subtitulos = [];
 $destinatarios = [];
 $resultado = '';
 
-//LEER BLOQUES DESDE MYSQL
-// Solo leemos lo básico: titulo, subtitulo, mensaje
-$stmt = $pdo->query("
-    SELECT destinatario, titulo, subtitulo, mensaje
-    FROM bloques 
-    WHERE visible = 1 
-    ORDER BY orden
-");
+// Variables auxiliares (ya no se usan para renderizar HTML, pero se mantienen por compatibilidad si algo las require)
+$mensajes = [];
+$titulos = [];
+$subtitulos = [];
+$destinatarios = [];
+$bloques_visibles = 0; // Valor por defecto
 
-$bloques = $stmt->fetchAll();
-$bloques_visibles = count($bloques);
-
-if ($bloques_visibles === 0) {
-    $bloques_visibles = 1;
-    $destinatarios[1] = "";
-    $titulos[1] = ""; // Ahora sale vacío
-    $subtitulos[1] = ""; // También quitamos el subtítulo por defecto si quieres
-    $mensajes[1] = "";
-} else {
-    foreach ($bloques as $i => $bloque) {
-        $n = $i + 1;
-        $destinatarios[$n] = $bloque['destinatario'];
-
-        // Si el título es el genérico por defecto (independientemente del número o icono), lo mostramos vacío
-        $t = $bloque['titulo'];
-        if (strpos($t, 'Archivos para correo') !== false) {
-            $t = "";
-        }
-
-        $titulos[$n] = $t;
-        $subtitulos[$n] = $bloque['subtitulo'];
-        $mensajes[$n] = $bloque['mensaje'];
-    }
-}
 
 // PROCESAR FORMULARIO
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    // DEBUG: Loguear datos recibidos
+    file_put_contents('debug_log.txt', date('Y-m-d H:i:s') . " - POST Data: " . print_r($_POST, true) . "\n", FILE_APPEND);
 
     $enviosExitosos = 0;
 
@@ -77,9 +53,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($index_array < $num_existentes) {
             $bloque_actual = $bloques_existentes[$index_array];
-            $stmtUpdate->execute([$destinatario, $titulo, $subtitulo, $email, $i, $bloque_actual['id']]);
+            if (!$stmtUpdate->execute([$destinatario, $titulo, $subtitulo, $email, $i, $bloque_actual['id']])) {
+                file_put_contents('debug_log.txt', "Error updating ID {$bloque_actual['id']}: " . print_r($stmtUpdate->errorInfo(), true) . "\n", FILE_APPEND);
+            }
         } else {
-            $stmtInsert->execute([$i, $destinatario, $titulo, $subtitulo, $email]);
+            if (!$stmtInsert->execute([$i, $destinatario, $titulo, $subtitulo, $email])) {
+                file_put_contents('debug_log.txt', "Error inserting index $i: " . print_r($stmtInsert->errorInfo(), true) . "\n", FILE_APPEND);
+            }
         }
     }
 
