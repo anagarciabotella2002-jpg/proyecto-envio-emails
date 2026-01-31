@@ -13,7 +13,6 @@ config.php
 # mailer.php (Solo si no has separado las claves todavía)
 
 # --- Archivos personales o borradores ---
-memoria de proyecto.txt
-
+memoria_proyecto.txt
 # NOTA: No he puesto composer.json ni composer.lock aquí
 # porque son necesarios para que el proyecto funcione en otro PC.
