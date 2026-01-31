@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Envío de Archivos</title>
+    <!-- Se recomienda quitar la versión dinámica de PHP del CSS para producción en HTML puro. 
+         Si se necesita caché busting, se puede hacer manual o vía script.
+         Por ahora se deja limpio -->
+    <link rel="stylesheet" href="/proyecto_email/correo_archivos/style.css">
+</head>
+
+<body>
+
+    <h2>Formulario de envío de correos con archivos</h2>
+
+    <!-- Los mensajes de éxito/error se insertarán aquí dinámicamente vía JS -->
+
+    <div id="contenedor-bloques">
+
+        <div class="block-controls" style="margin: 10px 0;">
+            <button type="button" onclick="agregarBloque()">➕ Añadir nuevo bloque</button>
+            <button type="button" onclick="eliminarBloque()">➖ Eliminar último bloque</button>
+        </div>
+
+        <form action="enviar-correos.php" method="POST" enctype="multipart/form-data" id="formulario">
+            <!-- El valor inicial será establecido por JS -->
+            <input type="hidden" name="bloques_visibles" id="bloquesVisibles" value="0">
+
+            <!-- Los bloques se generarán aquí dinámicamente con JS -->
+            
+            <button type="submit">📤 Enviar</button>
+            <button type="button" onclick="guardarCambios()">💾 Guardar cambios</button>
+        </form>
+    </div>
+
+    <!-- Script con timestamp para evitar caché agresivo si se desea, 
+         pero en HTML puro usamos ruta normal, o añadimos query param manual si editamos mucho -->
+    <script src="script.js"></script>
+</body>
+
+</html>

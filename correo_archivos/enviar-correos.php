@@ -47,7 +47,7 @@ if ($bloques_visibles === 0) {
     }
 }
 
-//PROCESAR FORMULARIO
+// PROCESAR FORMULARIO
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $enviosExitosos = 0;
@@ -90,7 +90,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     //ENVIAR CORREOS
-//ENVIAR CORREOS
     if (!$es_guardado) {
 
         for ($i = 1; $i <= $nuevos_bloques_visibles; $i++) {
@@ -159,16 +158,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
-        // Tus mensajes originales
+        // Determinar mensaje y tipo
         if ($enviosExitosos > 0) {
-            $_SESSION['msg_success'] = "Se enviaron $enviosExitosos correos correctamente.";
+            $msg = "Se enviaron $enviosExitosos correos correctamente.";
+            $type = "success";
         } else {
-            $_SESSION['msg_error_global'] = "No se enviaron correos (verifica datos).";
+            $msg = "No se enviaron correos (verifica datos).";
+            $type = "error";
         }
     } else {
-        $_SESSION['msg_success'] = "Cambios guardados correctamente.";
+        $msg = "Cambios guardados correctamente.";
+        $type = "success";
     }
 
-    header("Location: " . $_SERVER['PHP_SELF']);
+    // Redirección a index.html con parámetros
+    header("Location: index.html?msg=" . urlencode($msg) . "&type=" . $type);
+    exit;
+} else if (isset($_GET['accion']) && $_GET['accion'] === 'obtener_datos') {
+    // API para obtener datos en JSON
+    header('Content-Type: application/json');
+    echo json_encode($bloques);
     exit;
 }
