@@ -1,0 +1,39 @@
+MEMORIA DEL PROYECTO: SISTEMA DE GESTIÓN Y ENVÍO DE CORREOS ELECTRÓNICOS
+
+1. DESCRIPCIÓN DEL PROYECTO
+Este proyecto consiste en una aplicación web diseñada para facilitar el envío masivo pero personalizado de correos electrónicos con archivos adjuntos. La herramienta permite gestionar múltiples "bloques" de correo, donde cada bloque tiene su propio destinatario, asunto, mensaje y archivos adjuntos.
+
+El objetivo principal es proporcionar una interfaz intuitiva donde el usuario pueda redactar varios correos simultáneamente, guardar borradores en una base de datos para no perder el trabajo y enviarlos todos con un solo clic a través de un servidor SMTP seguro.
+
+Inicialmente, el proyecto consistía en un único archivo PHP que almacenaba la información en archivos de texto (.txt). Para mejorar la escalabilidad, organización y profesionalidad del código, se ha realizado una migración completa hacia una estructura modular utilizando una base de datos MySQL.
+
+2. HERRAMIENTAS Y TECNOLOGÍAS UTILIZADAS
+- PHP (Versión 8.x): Lenguaje de programación del lado del servidor utilizado para la lógica de negocio y la gestión de peticiones.
+- MySQL: Sistema de gestión de bases de datos relacional para el almacenamiento persistente de los bloques de correo.
+- PHPMailer: Librería profesional de PHP para el envío de correos electrónicos, configurada para trabajar con protocolos seguros (SMTP con TLS/SSL).
+- HTML5 y Semantic CSS3: Para la estructura y el diseño visual. Se han utilizado técnicas modernas como variables CSS (Custom Properties) para una gestión centralizada del diseño y Flexbox para el posicionamiento dinámico de los elementos.
+- JavaScript (Vanilla JS): Utilizado para la interactividad de la página, como la adición/eliminación dinámica de bloques y la gestión del estado del formulario en el cliente.
+- Composer: Gestor de dependencias de PHP utilizado para integrar y actualizar la librería PHPMailer de forma profesional.
+- PDO (PHP Data Objects): Capa de abstracción para la base de datos que garantiza mayor seguridad (sentencias preparadas) y flexibilidad si se cambiara el motor de BD en el futuro.
+
+3. ESTRUCTURA Y FUNCIÓN DE LOS ARCHIVOS
+
+Carpeta /conexion:
+- conexion.php: Contiene la configuración de la conexión a la base de datos MySQL mediante PDO. Centraliza las credenciales para facilitar el mantenimiento.
+
+Carpeta /correo_archivos:
+- index.php: Es la página principal y el punto de entrada para el usuario. Se encarga de mostrar el formulario dinámico y renderizar los bloques guardados en la base de datos.
+- enviar-correos.php: Contiene la lógica que procesa el formulario. Maneja tanto el guardado de datos en MySQL (INSERT/UPDATE/DELETE) como la ejecución del envío de correos.
+- mailer.php: Archivo que encapsula la configuración de PHPMailer. Define la función `enviarCorreo()`, abstrayendo la complejidad de la configuración del servidor SMTP.
+- script.js: Gestiona el comportamiento en el cliente. Permite añadir o eliminar bloques en el DOM, sincroniza los cambios de texto con los inputs ocultos y maneja la visualización de archivos seleccionados.
+- style.css: Define toda la estética del proyecto (colores, márgenes, animaciones de botones, etc.), logrando una interfaz profesional.
+
+Raíz del proyecto:
+- correo_archivos.sql: Archivo de volcado SQL que contiene la estructura necesaria de la base de datos (tablas y campos) para que el proyecto sea desplegable en cualquier servidor local como XAMPP.
+- vendor/: Carpeta generada por Composer que contiene PHPMailer y otras dependencias necesarias.
+
+4. EVOLUCIÓN DEL PROYECTO
+El cambio más significativo ha sido la migración de un sistema basado en ficheros de texto plano a uno basado en base de datos. Esto aporta ventajas críticas:
+- Integridad de datos: Se evita la corrupción de archivos de texto concurrentes.
+- Flexibilidad: Es mucho más sencillo añadir campos nuevos (como el destinatario dinámico) o reordenar los bloques.
+- Limpieza: El código está separado por funciones (Conexión, Lógica, Diseño, Scripting), siguiendo principios similares al patrón MVC, lo que facilita enormemente que otros desarrolladores (o el tutor) puedan entender y escalar el proyecto.

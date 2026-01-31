@@ -1,0 +1,204 @@
+:root {
+    --primary-color: #4f46e5;
+    /* Modern Indigo */
+    --primary-hover: #4338ca;
+    --secondary-bg: #e5e7eb;
+    --text-color: #1f2937;
+    --card-bg: #ffffff;
+    --border-color: #d1d5db;
+    --success-bg: #ecfdf5;
+    --success-text: #065f46;
+    --error-bg: #fef2f2;
+    --error-text: #991b1b;
+}
+
+body {
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f3f4f6;
+    color: var(--text-color);
+    margin: 0;
+    padding: 20px;
+    line-height: 1.6;
+}
+
+h2 {
+    text-align: center;
+    color: #111827;
+    margin-bottom: 40px;
+    font-weight: 700;
+}
+
+/* Main Container */
+#contenedor-bloques {
+    max-width: 800px;
+    margin: 0 auto;
+    padding-bottom: 50px;
+}
+
+/* Top Controls (Add/Remove) */
+.block-controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px !important;
+}
+
+.block-controls button {
+    background-color: white;
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    border-radius: 50px;
+    /* Pill shape for controls */
+    padding: 10px 25px;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.block-controls button:hover {
+    background-color: #f9fafb;
+    border-color: #9ca3af;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Email Card / Section */
+.seccion {
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    padding: 30px;
+    margin-bottom: 25px;
+    border: 1px solid #e5e7eb;
+    transition: box-shadow 0.3s ease;
+}
+
+.seccion:hover {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Labels & Inputs */
+@font-face {
+    font-family: 'Segoe UI';
+    src: local('Segoe UI');
+}
+
+label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #374151;
+    font-size: 0.9rem;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    background-color: #fff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    font-family: inherit;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+/* Subject distinction */
+input[name^="titulo"] {
+    font-weight: 600;
+    color: #111827;
+}
+
+/* File Upload Area */
+.file-list {
+    border: 2px dashed #cbd5e1;
+    background-color: #f8fafc;
+    border-radius: 8px;
+    padding: 15px;
+    min-height: 40px;
+    margin-bottom: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.file-list p {
+    margin: 4px 0;
+    font-size: 0.9rem;
+    color: #475569;
+    padding-left: 24px;
+    position: relative;
+    background: url('data:image/svg+xml;utf8,<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%23475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M13.828 10.172a4 4 0 0 0-5.656 0l-4 4a4 4 0 1 0 5.656 5.656l1.102-1.101M17.5 17.5l-3.236-3.236" /><path d="M7 7l3.236 3.236" /><path d="M10.172 13.828a4 4 0 0 0 5.656 0l4-4a4 4 0 0 0-5.656-5.656l-1.102 1.101" /></svg>') no-repeat left center;
+}
+
+/* Action Buttons (Send / Save) */
+form button[type="submit"],
+form button[onclick="guardarCambios()"] {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: background-color 0.2s;
+}
+
+form button[type="submit"] {
+    background-color: var(--primary-color);
+    color: white;
+    box-shadow: 0 4px 6px rgba(79, 70, 229, 0.3);
+}
+
+form button[type="submit"]:hover {
+    background-color: var(--primary-hover);
+    box-shadow: 0 6px 8px rgba(79, 70, 229, 0.4);
+}
+
+form button[onclick="guardarCambios()"] {
+    background-color: transparent;
+    color: #6b7280;
+    border: 2px solid #e5e7eb;
+    margin-top: 15px;
+}
+
+form button[onclick="guardarCambios()"]:hover {
+    border-color: #9ca3af;
+    color: #374151;
+    background-color: #fff;
+}
+
+/* Messages */
+.msg-success,
+.msg-error-global {
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.msg-success {
+    background-color: var(--success-bg);
+    color: var(--success-text);
+    border: 1px solid #a7f3d0;
+}
+
+.msg-error-global {
+    background-color: var(--error-bg);
+    color: var(--error-text);
+    border: 1px solid #fecaca;
+}

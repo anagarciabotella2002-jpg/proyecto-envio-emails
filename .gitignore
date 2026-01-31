@@ -1,0 +1,19 @@
+# --- Archivos de sistema y entorno ---
+.DS_Store
+Thumbs.db
+
+# --- Carpetas generadas automáticamente ---
+vendor/
+uploads/
+
+# --- Archivos de configuración (SEGURIDAD) ---
+# Aquí van tus claves. ¡Nunca subir esto!
+config.php
+# Si creaste un mailer con claves dentro y no usaste config, ignóralo:
+# mailer.php (Solo si no has separado las claves todavía)
+
+# --- Archivos personales o borradores ---
+memoria de proyecto.txt
+
+# NOTA: No he puesto composer.json ni composer.lock aquí
+# porque son necesarios para que el proyecto funcione en otro PC.
