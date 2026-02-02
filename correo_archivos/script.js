@@ -24,23 +24,25 @@ function agregarBloque() {
     
     // Crear el nuevo bloque
     const nuevoBloque = document.createElement('div');
-    nuevoBloque.className = 'seccion';
+    // Apply Tailwind classes for the card style
+    nuevoBloque.className = 'seccion bg-white rounded-xl shadow-sm p-8 mb-6 border border-gray-200 hover:shadow-md transition-shadow duration-300';
     nuevoBloque.id = `bloque${contadorBloques}`;
     
     nuevoBloque.innerHTML = `
-        <label style="display:block; margin-bottom:5px;">Para:</label>
-        <input type="email" name="destinatario${contadorBloques}" placeholder="ejemplo@correo.com" style="width: 100%; padding: 8px; margin-bottom: 10px;">
+        <label class="block mb-2 font-semibold text-gray-700 text-sm">Para:</label>
+        <input type="email" name="destinatario${contadorBloques}" placeholder="ejemplo@correo.com" class="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 mb-5">
 
-        <label style="display:block; margin-bottom:5px;">Asunto:</label>
-        <input type="text" name="titulo${contadorBloques}" style="width: 100%; padding: 8px; margin-bottom: 10px; font-weight: bold;">
+        <label class="block mb-2 font-semibold text-gray-700 text-sm">Asunto:</label>
+        <input type="text" name="titulo${contadorBloques}" class="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900 font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 mb-5">
 
-        <input type="file" name="archivo${contadorBloques}[]" multiple onchange="mostrarArchivos(this, 'lista${contadorBloques}')">
-        <div id="lista${contadorBloques}" class="file-list"></div>
+        <input type="file" name="archivo${contadorBloques}[]" multiple onchange="mostrarArchivos(this, 'lista${contadorBloques}')" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 mb-4 transition-all">
 
-        <label style="display:block; margin-top: 15px; margin-bottom:5px;">Mensaje:</label>
+        <div id="lista${contadorBloques}" class="file-list border-2 border-dashed border-gray-300 bg-gray-50 rounded-lg p-4 min-h-[40px] mb-6 flex flex-col justify-center"></div>
+
+        <label class="block mb-2 font-semibold text-gray-700 text-sm">Mensaje:</label>
         <input type="hidden" name="subtitulo${contadorBloques}" value="Texto del correo">
 
-        <textarea name="email${contadorBloques}" rows="8"></textarea>
+        <textarea name="email${contadorBloques}" rows="8" class="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 font-sans"></textarea>
     `;
 
     // Insertar antes de los botones de envío

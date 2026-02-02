@@ -1,0 +1,23 @@
+[Mon Feb  2 09:19:00 2026] PHP 8.3.6 Development Server (http://localhost:8000) started
+[Mon Feb  2 09:19:33 2026] [::1]:57046 Accepted
+[Mon Feb  2 09:19:33 2026] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] No such file or directory in /app/conexion/conexion.php:2
+Stack trace:
+#0 /app/conexion/conexion.php(2): PDO->__construct()
+#1 /app/correo_archivos/enviar-correos.php(5): require_once('...')
+#2 /app/correo_archivos/index.php(3): include('...')
+#3 {main}
+  thrown in /app/conexion/conexion.php on line 2
+[Mon Feb  2 09:19:33 2026] [::1]:57046 [500]: GET /correo_archivos/index.php - Uncaught PDOException: SQLSTATE[HY000] [2002] No such file or directory in /app/conexion/conexion.php:2
+Stack trace:
+#0 /app/conexion/conexion.php(2): PDO->__construct()
+#1 /app/correo_archivos/enviar-correos.php(5): require_once('...')
+#2 /app/correo_archivos/index.php(3): include('...')
+#3 {main}
+  thrown in /app/conexion/conexion.php on line 2
+[Mon Feb  2 09:19:33 2026] [::1]:57046 Closing
+[Mon Feb  2 09:20:47 2026] [::1]:37384 Accepted
+[Mon Feb  2 09:20:47 2026] [::1]:37384 [200]: GET /correo_archivos/test_index.php
+[Mon Feb  2 09:20:47 2026] [::1]:37384 Closing
+[Mon Feb  2 09:20:47 2026] [::1]:37396 Accepted
+[Mon Feb  2 09:20:47 2026] [::1]:37396 [200]: GET /correo_archivos/script.js?v=1770024047.8159
+[Mon Feb  2 09:20:47 2026] [::1]:37396 Closing
