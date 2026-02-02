@@ -4,38 +4,43 @@
 <head>
     <meta charset="UTF-8">
     <title>Envío de Archivos</title>
-    <!-- Se recomienda quitar la versión dinámica de PHP del CSS para producción en HTML puro. 
-         Si se necesita caché busting, se puede hacer manual o vía script.
-         Por ahora se deja limpio -->
-    <link rel="stylesheet" href="/proyecto_email/correo_archivos/style.css">
+    <link rel="stylesheet" href="/proyecto_email/correo_archivos/output.css">
 </head>
 
-<body>
+<body class="bg-gray-100 text-gray-800 font-sans p-5 leading-relaxed">
 
-    <h2>Formulario de envío de correos con archivos</h2>
+    <h2 class="text-center text-gray-900 mb-10 font-bold text-3xl">Formulario de envío de correos con archivos</h2>
 
-    <!-- Los mensajes de éxito/error se insertarán aquí dinámicamente vía JS -->
+    <div id="contenedor-bloques" class="max-w-3xl mx-auto pb-12">
 
-    <div id="contenedor-bloques">
-
-        <div class="block-controls" style="margin: 10px 0;">
-            <button type="button" onclick="agregarBloque()">➕ Añadir nuevo bloque</button>
-            <button type="button" onclick="eliminarBloque()">➖ Eliminar último bloque</button>
+        <div class="block-controls flex justify-center gap-4 mb-8">
+            <button type="button" onclick="agregarBloque()" 
+                class="bg-white border border-gray-300 text-gray-800 rounded-full px-6 py-2.5 text-sm transition shadow-sm hover:bg-gray-50 hover:border-gray-400 hover:-translate-y-px hover:shadow-md">
+                ➕ Añadir nuevo bloque
+            </button>
+            <button type="button" onclick="eliminarBloque()" 
+                class="bg-white border border-gray-300 text-gray-800 rounded-full px-6 py-2.5 text-sm transition shadow-sm hover:bg-gray-50 hover:border-gray-400 hover:-translate-y-px hover:shadow-md">
+                ➖ Eliminar último bloque
+            </button>
         </div>
 
         <form action="enviar-correos.php" method="POST" enctype="multipart/form-data" id="formulario">
-            <!-- El valor inicial será establecido por JS -->
             <input type="hidden" name="bloques_visibles" id="bloquesVisibles" value="0">
-
+            
             <!-- Los bloques se generarán aquí dinámicamente con JS -->
             
-            <button type="submit">📤 Enviar</button>
-            <button type="button" onclick="guardarCambios()">💾 Guardar cambios</button>
+            <button type="submit" 
+                class="block w-full py-3.5 text-lg font-semibold border-none rounded-lg cursor-pointer mt-4 transition bg-primary text-white shadow-md hover:bg-primary-hover hover:shadow-lg">
+                📤 Enviar
+            </button>
+            
+            <button type="button" onclick="guardarCambios()" 
+                class="block w-full py-3.5 text-lg font-semibold border-2 border-gray-200 rounded-lg cursor-pointer mt-4 transition bg-transparent text-gray-500 hover:border-gray-400 hover:text-gray-700 hover:bg-white">
+                💾 Guardar cambios
+            </button>
         </form>
     </div>
 
-    <!-- Script con timestamp para evitar caché agresivo si se desea, 
-         pero en HTML puro usamos ruta normal, o añadimos query param manual si editamos mucho -->
     <script src="script.js"></script>
 </body>
 

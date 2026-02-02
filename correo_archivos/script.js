@@ -15,7 +15,9 @@ function verificarMensajes() {
 
     if (msg && type) {
         const div = document.createElement('div');
-        div.className = type === 'success' ? 'msg-success' : 'msg-error-global';
+        div.className = type === 'success' 
+            ? 'p-4 rounded-lg mb-8 text-center font-medium bg-success-bg text-success-text border border-green-200' 
+            : 'p-4 rounded-lg mb-8 text-center font-medium bg-error-bg text-error-text border border-red-200';
         div.textContent = decodeURIComponent(msg);
         
         // Insertar después del título h2
@@ -75,27 +77,27 @@ function agregarBloqueVisual(idNum, destinatario, titulo, mensaje) {
     if(document.getElementById(`bloque${idNum}`)) return;
 
     const nuevoBloque = document.createElement('div');
-    nuevoBloque.className = 'seccion';
+    nuevoBloque.className = 'bg-card-bg rounded-xl shadow-sm hover:shadow-lg p-8 mb-6 border border-gray-200 transition-shadow duration-300';
     nuevoBloque.id = `bloque${idNum}`;
     
     nuevoBloque.innerHTML = `
-        <label style="display:block; margin-bottom:5px;">Para:</label>
+        <label class="block mb-1.5 font-semibold text-gray-700 text-sm">Para:</label>
         <input type="email" name="destinatario${idNum}" placeholder="ejemplo@correo.com" 
             value="${destinatario || ''}" 
-            style="width: 100%; padding: 8px; margin-bottom: 10px;">
+            class="w-full box-border p-3 border border-gray-300 rounded-lg text-base mb-5 bg-white transition-colors focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10">
 
-        <label style="display:block; margin-bottom:5px;">Asunto:</label>
+        <label class="block mb-1.5 font-semibold text-gray-700 text-sm">Asunto:</label>
         <input type="text" name="titulo${idNum}" 
             value="${titulo || ''}"
-            style="width: 100%; padding: 8px; margin-bottom: 10px; font-weight: bold;">
+            class="w-full box-border p-3 border border-gray-300 rounded-lg text-base mb-5 bg-white transition-colors focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 font-bold text-gray-900">
 
-        <input type="file" name="archivo${idNum}[]" multiple onchange="mostrarArchivos(this, 'lista${idNum}')">
-        <div id="lista${idNum}" class="file-list"></div>
+        <input type="file" name="archivo${idNum}[]" multiple onchange="mostrarArchivos(this, 'lista${idNum}')" class="mb-2">
+        <div id="lista${idNum}" class="border-2 border-dashed border-slate-300 bg-slate-50 rounded-lg p-4 min-h-[40px] mb-6 flex flex-col justify-center"></div>
 
-        <label style="display:block; margin-top: 15px; margin-bottom:5px;">Mensaje:</label>
+        <label class="block mt-4 mb-1.5 font-semibold text-gray-700 text-sm">Mensaje:</label>
         <input type="hidden" name="subtitulo${idNum}" value="Texto del correo">
 
-        <textarea name="email${idNum}" rows="8">${mensaje || ''}</textarea>
+        <textarea name="email${idNum}" rows="8" class="w-full box-border p-3 border border-gray-300 rounded-lg text-base mb-5 bg-white transition-colors focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 font-inherit">${mensaje || ''}</textarea>
     `;
 
     formulario.insertBefore(nuevoBloque, botonesSubmit);
@@ -115,7 +117,9 @@ function mostrarArchivos(input, contenedorId) {
     }
 
     const cont = document.getElementById(contenedorId);
-    cont.innerHTML = archivosSeleccionados[contenedorId].map(n => `<p>${n}</p>`).join('');
+    cont.innerHTML = archivosSeleccionados[contenedorId].map(n => 
+        `<p class="my-1 text-sm text-slate-600 pl-6 relative bg-no-repeat bg-left-center" style="background-image: url('data:image/svg+xml;utf8,<svg width=\\'16\\' height=\\'16\\' viewBox=\\'0 0 24 24\\' fill=\\'none\\' stroke=\\'%23475569\\' stroke-width=\\'2\\' stroke-linecap=\\'round\\' stroke-linejoin=\\'round\\' xmlns=\\'http://www.w3.org/2000/svg\\'><path d=\\'M13.828 10.172a4 4 0 0 0-5.656 0l-4 4a4 4 0 1 0 5.656 5.656l1.102-1.101M17.5 17.5l-3.236-3.236\\' /><path d=\\'M7 7l3.236 3.236\\' /><path d=\\'M10.172 13.828a4 4 0 0 0 5.656 0l4-4a4 4 0 0 0-5.656-5.656l-1.102 1.101\\' /></svg>')">${n}</p>`
+    ).join('');
 }
 
 function agregarBloque() {
