@@ -23,9 +23,6 @@ $bloques_visibles = 0; // Valor por defecto
 // PROCESAR FORMULARIO
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    // DEBUG: Loguear datos recibidos
-    file_put_contents('debug_log.txt', date('Y-m-d H:i:s') . " - POST Data: " . print_r($_POST, true) . "\n", FILE_APPEND);
-
     $enviosExitosos = 0;
 
     $es_guardado = isset($_POST['guardar_cambios']);
@@ -53,13 +50,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($index_array < $num_existentes) {
             $bloque_actual = $bloques_existentes[$index_array];
-            if (!$stmtUpdate->execute([$destinatario, $titulo, $subtitulo, $email, $i, $bloque_actual['id']])) {
-                file_put_contents('debug_log.txt', "Error updating ID {$bloque_actual['id']}: " . print_r($stmtUpdate->errorInfo(), true) . "\n", FILE_APPEND);
-            }
+            $stmtUpdate->execute([$destinatario, $titulo, $subtitulo, $email, $i, $bloque_actual['id']]);
         } else {
-            if (!$stmtInsert->execute([$i, $destinatario, $titulo, $subtitulo, $email])) {
-                file_put_contents('debug_log.txt', "Error inserting index $i: " . print_r($stmtInsert->errorInfo(), true) . "\n", FILE_APPEND);
-            }
+            $stmtInsert->execute([$i, $destinatario, $titulo, $subtitulo, $email]);
         }
     }
 
@@ -156,6 +149,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
 } else if (isset($_GET['accion']) && $_GET['accion'] === 'obtener_datos') {
     // API para obtener datos en JSON
+    $stmt = $pdo->query("
+        SELECT destinatario, titulo, subtitulo, mensaje
+        FROM bloques 
+        WHERE visible = 1 
+        ORDER BY orden
+    ");
+    $bloques = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
     header('Content-Type: application/json');
     echo json_encode($bloques);
     exit;

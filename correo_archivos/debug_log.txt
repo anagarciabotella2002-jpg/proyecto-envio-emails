@@ -1,0 +1,20 @@
+2026-01-31 18:00:46 - POST Data: Array
+(
+    [bloques_visibles] => 1
+    [destinatario1] => mariacristinabotella@gmail.com
+    [titulo1] => 📎 Hola
+    [subtitulo1] => Texto del correo
+    [email1] => Holaaa
+    [guardar_cambios] => 1
+)
+
+2026-01-31 18:03:39 - POST Data: Array
+(
+    [bloques_visibles] => 1
+    [destinatario1] => anagarciabotella2002@gmail.com
+    [titulo1] => 📎 Hola
+    [subtitulo1] => Texto del correo
+    [email1] => hola
+    [guardar_cambios] => 1
+)
+

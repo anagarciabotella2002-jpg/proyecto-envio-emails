@@ -31,7 +31,7 @@ function verificarMensajes() {
 
 async function cargarDatos() {
     try {
-        const response = await fetch('enviar-correos.php?accion=obtener_datos');
+        const response = await fetch(`enviar-correos.php?accion=obtener_datos&t=${new Date().getTime()}`);
         if (!response.ok) throw new Error('Error al cargar datos');
         
         const bloques = await response.json();
