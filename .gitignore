@@ -17,3 +17,12 @@ memoria_proyecto.txt
 
 # NOTA: No he puesto composer.json ni composer.lock aquí
 # porque son necesarios para que el proyecto funcione en otro PC.
+
+# --- Node.js y Tailwind (Frontend) ---
+node_modules/
+**/node_modules/
+npm-debug.log
+
+# --- Logs y archivos temporales ---
+debug_log.txt
+**/debug_log.txt
