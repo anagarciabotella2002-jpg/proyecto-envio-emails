@@ -3,45 +3,60 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Envío de Archivos</title>
-    <link rel="stylesheet" href="/proyecto_email/correo_archivos/output.css">
+    <!-- Google Fonts: Inter for a clean, modern look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Version query parameter added to force browser to reload CSS -->
+    <link rel="stylesheet" href="/proyecto_email/correo_archivos/output.css?v=2">
+    <script src="script.js" defer></script>
 </head>
 
-<body class="bg-gray-100 text-gray-800 font-sans p-5 leading-relaxed">
+<body class="bg-surface-50 text-surface-700 font-sans antialiased min-h-screen py-10 px-4 sm:px-6 lg:px-8 selection:bg-brand-100 selection:text-brand-900">
 
-    <h2 class="text-center text-gray-900 mb-10 font-bold text-3xl">Formulario de envío de correos con archivos</h2>
-
-    <div id="contenedor-bloques" class="max-w-3xl mx-auto pb-12">
-
-        <div class="block-controls flex justify-center gap-4 mb-8">
-            <button type="button" onclick="agregarBloque()" 
-                class="bg-white border border-gray-300 text-gray-800 rounded-full px-6 py-2.5 text-sm transition shadow-sm hover:bg-gray-50 hover:border-gray-400 hover:-translate-y-px hover:shadow-md">
-                ➕ Añadir nuevo bloque
-            </button>
-            <button type="button" onclick="eliminarBloque()" 
-                class="bg-white border border-gray-300 text-gray-800 rounded-full px-6 py-2.5 text-sm transition shadow-sm hover:bg-gray-50 hover:border-gray-400 hover:-translate-y-px hover:shadow-md">
-                ➖ Eliminar último bloque
-            </button>
+    <div class="max-w-4xl mx-auto">
+        <div class="text-center mb-12 animate-fade-in">
+            <h2 class="text-3xl font-semibold text-surface-900 tracking-tight sm:text-4xl mb-2">Gestión de Envíos</h2>
+            <p class="text-lg text-surface-500">Configura y envía tus correos con archivos adjuntos.</p>
         </div>
 
-        <form action="enviar-correos.php" method="POST" enctype="multipart/form-data" id="formulario">
-            <input type="hidden" name="bloques_visibles" id="bloquesVisibles" value="0">
-            
-            <!-- Los bloques se generarán aquí dinámicamente con JS -->
-            
-            <button type="submit" 
-                class="block w-full py-3.5 text-lg font-semibold border-none rounded-lg cursor-pointer mt-4 transition bg-primary text-white shadow-md hover:bg-primary-hover hover:shadow-lg">
-                📤 Enviar
-            </button>
-            
-            <button type="button" onclick="guardarCambios()" 
-                class="block w-full py-3.5 text-lg font-semibold border-2 border-gray-200 rounded-lg cursor-pointer mt-4 transition bg-transparent text-gray-500 hover:border-gray-400 hover:text-gray-700 hover:bg-white">
-                💾 Guardar cambios
-            </button>
-        </form>
+        <div id="contenedor-bloques" class="space-y-8">
+
+            <div class="flex flex-col sm:flex-row justify-center gap-4 mb-10 animate-fade-in">
+                <button type="button" onclick="agregarBloque()" 
+                    class="group inline-flex items-center justify-center gap-2 bg-white px-6 py-2.5 text-sm font-medium text-surface-700 shadow-card rounded-lg hover:shadow-card-hover hover:text-brand-600 border border-transparent hover:border-brand-100 transition-all duration-300">
+                    <svg class="w-4 h-4 text-surface-400 group-hover:text-brand-500 transition-colors" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                    Añadir Nuevo Bloque
+                </button>
+                <button type="button" onclick="eliminarBloque()" 
+                    class="group inline-flex items-center justify-center gap-2 bg-white px-6 py-2.5 text-sm font-medium text-surface-700 shadow-card rounded-lg hover:shadow-card-hover hover:text-red-600 border border-transparent hover:border-red-100 transition-all duration-300">
+                    <svg class="w-4 h-4 text-surface-400 group-hover:text-red-500 transition-colors" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path></svg>
+                    Eliminar Último Bloque
+                </button>
+            </div>
+
+            <form action="enviar-correos.php" method="POST" enctype="multipart/form-data" id="formulario" class="animate-slide-up">
+                <input type="hidden" name="bloques_visibles" id="bloquesVisibles" value="0">
+                
+                <!-- Los bloques se generarán aquí dinámicamente con JS -->
+                
+                <div class="border-t border-surface-200 mt-10 pt-10 flex flex-col sm:flex-row gap-4 justify-end items-center">
+                    <button type="button" onclick="guardarCambios()" 
+                        class="order-2 sm:order-1 w-full sm:w-auto px-6 py-3 text-sm font-medium text-surface-700 bg-white border border-surface-300 hover:bg-surface-50 hover:border-surface-400 hover:text-brand-700 shadow-sm rounded-lg transition-all duration-200">
+                        Guardar cambios
+                    </button>
+                    
+                    <button type="submit" 
+                        class="order-1 sm:order-2 w-full sm:w-auto px-8 py-3 text-sm font-semibold text-white bg-brand-600 rounded-lg shadow-lg shadow-brand-500/30 hover:bg-brand-700 hover:shadow-brand-600/40 hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2">
+                        <span>Enviar Correos</span>
+                        <svg class="w-4 h-4 opacity-90" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 
-    <script src="script.js"></script>
 </body>
-
 </html>
