@@ -205,3 +205,113 @@ function guardarCambios() {
 
     form.submit();
 }
+
+/* 
+TEMPORIZADOR */
+let intervaloTimer = null;
+let segundosRestantes = 0;
+let temporizadorActivo = false;
+
+function toggleTemporizador(btnRef) {
+    const inputsContainer = document.getElementById('inputsTemporizador');
+    const relojContenedor = document.getElementById('relojBloques');
+    const btnReiniciar = document.getElementById('btnReiniciar');
+    
+    // CASO 1: Iniciar por primera vez
+    if (segundosRestantes === 0 && !temporizadorActivo) {
+        const h = parseInt(document.getElementById('inputHoras').value) || 0;
+        const m = parseInt(document.getElementById('inputMinutos').value) || 0;
+        const s = parseInt(document.getElementById('inputSegundos').value) || 0;
+        
+        segundosRestantes = (h * 3600) + (m * 60) + s;
+        
+        if (segundosRestantes <= 0) {
+            alert("Por favor, introduce un tiempo válido (horas, minutos o segundos).");
+            return;
+        }
+        
+        inputsContainer.classList.add('hidden');
+        relojContenedor.classList.remove('hidden');
+        relojContenedor.classList.add('flex');
+        btnReiniciar.classList.remove('hidden');
+    }
+
+    // CASO 2: Queremos PAUSARLO
+    if (temporizadorActivo) {
+        clearInterval(intervaloTimer);
+        temporizadorActivo = false;
+        
+        btnRef.innerHTML = `
+            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
+            <span>Reanudar</span>`;
+        btnRef.className = "px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold rounded-lg shadow-md transition-all flex items-center gap-2 justify-center w-[130px]";
+        
+        relojContenedor.classList.add('opacity-60', 'animate-pulse');
+    } 
+    // CASO 3: Queremos INICIAR/REANUDAR
+    else {
+        temporizadorActivo = true;
+        
+        btnRef.innerHTML = `
+            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
+            <span>Pausar</span>`;
+        btnRef.className = "px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg shadow-md transition-all flex items-center gap-2 justify-center w-[130px]";
+        
+        relojContenedor.classList.remove('opacity-60', 'animate-pulse');
+        actualizarDisplayBloques();
+
+        intervaloTimer = setInterval(() => {
+            segundosRestantes--;
+            actualizarDisplayBloques();
+
+            if (segundosRestantes <= 0) {
+                clearInterval(intervaloTimer);
+                temporizadorActivo = false;
+                btnRef.classList.add('hidden');
+                document.getElementById('formulario').submit();
+            }
+        }, 1000);
+    }
+}
+
+function reiniciarTemporizador() {
+    clearInterval(intervaloTimer);
+    intervaloTimer = null;
+    segundosRestantes = 0;
+    temporizadorActivo = false;
+
+    const inputsContainer = document.getElementById('inputsTemporizador');
+    const relojContenedor = document.getElementById('relojBloques');
+    const btnTimer = document.getElementById('btnTimer');
+    const btnReiniciar = document.getElementById('btnReiniciar');
+
+    // Restaurar inputs
+    inputsContainer.classList.remove('hidden');
+    relojContenedor.classList.add('hidden');
+    relojContenedor.classList.remove('flex', 'opacity-60', 'animate-pulse');
+    
+    // Restaurar botón principal
+    btnTimer.classList.remove('hidden');
+    btnTimer.innerHTML = `
+        <svg id="iconoBtnTimer" class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
+        <span id="textoBtnTimer">Iniciar</span>`;
+    btnTimer.className = "px-6 py-3 bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold rounded-lg shadow-md transition-all flex items-center gap-2 justify-center w-[130px]";
+
+    // Ocultar botón reiniciar
+    btnReiniciar.classList.add('hidden');
+
+    // Limpiar inputs
+    document.getElementById('inputHoras').value = '';
+    document.getElementById('inputMinutos').value = '';
+    document.getElementById('inputSegundos').value = '';
+}
+
+function actualizarDisplayBloques() {
+    const h = Math.floor(segundosRestantes / 3600);
+    const m = Math.floor((segundosRestantes % 3600) / 60);
+    const s = segundosRestantes % 60;
+    
+    document.getElementById('displayH').innerText = h < 10 ? '0'+h : h;
+    document.getElementById('displayM').innerText = m < 10 ? '0'+m : m;
+    document.getElementById('displayS').innerText = s < 10 ? '0'+s : s;
+}

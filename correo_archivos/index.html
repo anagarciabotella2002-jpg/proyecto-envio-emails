@@ -5,11 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Envío de Archivos</title>
-    <!-- Google Fonts: Inter for a clean, modern look -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <!-- Version query parameter added to force browser to reload CSS -->
     <link rel="stylesheet" href="/proyecto_email/correo_archivos/output.css?v=2">
     <script src="script.js" defer></script>
 </head>
@@ -40,8 +38,75 @@
             <form action="enviar-correos.php" method="POST" enctype="multipart/form-data" id="formulario" class="animate-slide-up">
                 <input type="hidden" name="bloques_visibles" id="bloquesVisibles" value="0">
                 
-                <!-- Los bloques se generarán aquí dinámicamente con JS -->
-                
+                                
+                <!--TEMPORIZADOR-->
+                <div class="bg-white border border-surface-200 rounded-xl p-6 mb-6 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6 animate-slide-up">
+    
+    <div class="flex items-center gap-4 w-full md:w-auto justify-center md:justify-start">
+        <div class="bg-brand-50 p-3 rounded-full text-brand-600">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        </div>
+        <div class="text-center md:text-left">
+            <h3 class="font-semibold text-surface-800">Envío Automático</h3>
+            <p class="text-sm text-surface-500">Configura el tiempo exacto</p>
+        </div>
+    </div>
+    
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-6 w-full md:w-auto">
+        
+        <div id="inputsTemporizador" class="flex items-center justify-center gap-2">
+            <div class="flex flex-col items-center">
+                <input type="number" id="inputHoras" placeholder="00" min="0" class="w-14 px-1 py-2 bg-surface-50 border border-surface-200 rounded-lg text-center font-mono text-sm focus:border-brand-500 focus:ring-1 focus:ring-brand-500 outline-none transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">
+                <span class="text-[10px] text-surface-400 mt-1 uppercase font-semibold">Horas</span>
+            </div>
+            <span class="text-surface-400 font-bold -mt-4">:</span>
+            <div class="flex flex-col items-center">
+                <input type="number" id="inputMinutos" placeholder="00" min="0" class="w-14 px-1 py-2 bg-surface-50 border border-surface-200 rounded-lg text-center font-mono text-sm focus:border-brand-500 focus:ring-1 focus:ring-brand-500 outline-none transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">
+                <span class="text-[10px] text-surface-400 mt-1 uppercase font-semibold">Min</span>
+            </div>
+            <span class="text-surface-400 font-bold -mt-4">:</span>
+            <div class="flex flex-col items-center">
+                <input type="number" id="inputSegundos" placeholder="00" min="0" class="w-14 px-1 py-2 bg-surface-50 border border-surface-200 rounded-lg text-center font-mono text-sm focus:border-brand-500 focus:ring-1 focus:ring-brand-500 outline-none transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">
+                <span class="text-[10px] text-surface-400 mt-1 uppercase font-semibold">Seg</span>
+            </div>
+        </div>
+
+        <div id="relojBloques" class="hidden justify-center items-center gap-2">
+            <div class="flex flex-col items-center">
+                <div id="displayH" class="bg-surface-100 border border-surface-200 text-brand-700 font-mono font-bold text-2xl w-14 h-14 flex items-center justify-center rounded-lg shadow-inner">00</div>
+                <span class="text-[10px] text-surface-400 mt-1 uppercase font-semibold">Hrs</span>
+            </div>
+            <span class="text-brand-700 font-bold text-xl -mt-4">:</span>
+            <div class="flex flex-col items-center">
+                <div id="displayM" class="bg-surface-100 border border-surface-200 text-brand-700 font-mono font-bold text-2xl w-14 h-14 flex items-center justify-center rounded-lg shadow-inner">00</div>
+                <span class="text-[10px] text-surface-400 mt-1 uppercase font-semibold">Min</span>
+            </div>
+            <span class="text-brand-700 font-bold text-xl -mt-4">:</span>
+            <div class="flex flex-col items-center">
+                <div id="displayS" class="bg-surface-100 border border-surface-200 text-brand-700 font-mono font-bold text-2xl w-14 h-14 flex items-center justify-center rounded-lg shadow-inner">00</div>
+                <span class="text-[10px] text-surface-400 mt-1 uppercase font-semibold">Seg</span>
+            </div>
+        </div>
+
+        <div class="flex flex-col items-center justify-center">
+            <div class="flex items-center gap-2">
+                <button type="button" onclick="toggleTemporizador(this)" id="btnTimer"
+                    class="px-6 py-3 bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold rounded-lg shadow-md transition-all flex items-center gap-2 justify-center w-[130px]">
+                    <svg id="iconoBtnTimer" class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
+                    <span id="textoBtnTimer">Iniciar</span>
+                </button>
+
+                <button type="button" onclick="reiniciarTemporizador()" id="btnReiniciar"
+                    class="hidden px-6 py-3 bg-surface-100 hover:bg-surface-200 text-surface-600 text-sm font-semibold rounded-lg shadow-sm border border-surface-200 transition-all flex items-center gap-2 justify-center">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                    <span>Reiniciar</span>
+                </button>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
                 <div class="border-t border-surface-200 mt-10 pt-10 flex flex-col sm:flex-row gap-4 justify-end items-center">
                     <button type="button" onclick="guardarCambios()" 
                         class="order-2 sm:order-1 w-full sm:w-auto px-6 py-3 text-sm font-medium text-surface-700 bg-white border border-surface-300 hover:bg-surface-50 hover:border-surface-400 hover:text-brand-700 shadow-sm rounded-lg transition-all duration-200">
